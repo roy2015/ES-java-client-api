@@ -20,7 +20,7 @@ public class GetDocumentDemo {
         try (RestHighLevelClient client = InitClient.getClient();) {
             // 1、创建获取文档请求
             GetRequest request = new GetRequest(
-                    "book13",   //索引
+                    "mess",   //索引
                     "_doc",     // mapping type
                     "1");     //文档id
 

@@ -21,13 +21,32 @@ import java.util.Date;
 public class BulkDemo {
     private static Logger logger = LogManager.getRootLogger();
 
-    public static void main(String[] args) {
-        try (RestHighLevelClient client = InitClient.getClient();) {
+    public static void mockData(BulkRequest request) {
+        request.add(new IndexRequest("fbp", "_doc", "4").source(XContentType.JSON,
+                "country", "西班牙",
+                "name", "哈维",
+                "club", "巴塞罗那俱乐部"));
+        request.add(new IndexRequest("fbp", "_doc", "5").source(XContentType.JSON,
+                "country", "葡萄牙",
+                "name", "c罗",
+                "club", "皇家马德里俱乐部"));
+        request.add(new IndexRequest("fbp", "_doc", "6").source(XContentType.JSON,
+                "country", "德国",
+                "name", "克洛泽",
+                "club", "拜仁慕尼黑俱乐部"));
 
+    }
+
+    public static void main(String[] args) {
+        try {
+            RestHighLevelClient client = InitClient.getClient();
             // 1、创建批量操作请求参数
             BulkRequest request = new BulkRequest();
+//            mockData(request);
             request.add(new IndexRequest("book13", "_doc", "1")
-                    .source(XContentType.JSON, "postDate", new Date()));
+                    .source(XContentType.JSON,
+                            "postDate", new Date(),
+                            "user", "liming"));
             request.add(new UpdateRequest("book13", "_doc", "2")
                     .doc(XContentType.JSON, "user", "liming"));
             request.add(new IndexRequest("book13", "_doc", "3")

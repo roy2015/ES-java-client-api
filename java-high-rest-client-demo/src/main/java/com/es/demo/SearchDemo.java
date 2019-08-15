@@ -6,7 +6,11 @@ import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.ShardSearchFailure;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.unit.Fuzziness;
 import org.elasticsearch.common.unit.TimeValue;
+import org.elasticsearch.index.query.FuzzyQueryBuilder;
+import org.elasticsearch.index.query.PrefixQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.rest.RestStatus;
 import org.elasticsearch.search.SearchHit;
@@ -31,20 +35,36 @@ public class SearchDemo {
 
             // 1、创建search请求
             //SearchRequest searchRequest = new SearchRequest();
-            SearchRequest searchRequest = new SearchRequest("book13");
+            SearchRequest searchRequest = new SearchRequest("fbp");
             searchRequest.types("_doc");
 
             // 2、用SearchSourceBuilder来构造查询请求体 ,请仔细查看它的方法，构造各种查询的方法都在这。
             SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
 
-            //构造QueryBuilder
-            /*QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("user", "kimchy")
+            //regexp query
+//            sourceBuilder.query(QueryBuilders.regexpQuery ("country", ".*牙"));
+
+            //fuzzy 查找
+            FuzzyQueryBuilder fuzzyQueryBuilder = QueryBuilders.fuzzyQuery("country", "葡萄");
+            fuzzyQueryBuilder.fuzziness(Fuzziness.ONE).prefixLength(1);
+            sourceBuilder.query(fuzzyQueryBuilder);
+
+            //wildcare 查找
+//            sourceBuilder.query(QueryBuilders.wildcardQuery("country", "*牙"));
+
+            //前缀查找
+//            sourceBuilder.query(QueryBuilders.prefixQuery("user", "郭"));
+
+            //分词查找
+//            sourceBuilder.query(QueryBuilders.termQuery("user", "郭"));
+
+            //match Query
+            /*QueryBuilder matchQueryBuilder = QueryBuilders.matchQuery("country", "国")
                     .fuzziness(Fuzziness.AUTO)
-                    .prefixLength(3)
+                    .prefixLength(1)
                     .maxExpansions(10);
             sourceBuilder.query(matchQueryBuilder);*/
 
-            sourceBuilder.query(QueryBuilders.termQuery("user", "liming"));
             sourceBuilder.from(0);
             sourceBuilder.size(10);
             sourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));

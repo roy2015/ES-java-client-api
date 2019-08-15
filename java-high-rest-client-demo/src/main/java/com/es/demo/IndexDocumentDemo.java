@@ -26,7 +26,7 @@ public class IndexDocumentDemo {
             // 2、准备文档数据
             // 方式一：直接给JSON串
             String jsonString = "{" +
-                    "\"user\":\"kimchy\"," +
+                    "\"user\":\"郭俊\"," +
                     "\"postDate\":\"2013-01-30\"," +
                     "\"message\":\"trying out Elasticsearch\"" +
                     "}";
