@@ -24,4 +24,14 @@ hs_err_pid*
 
 .idea/
 target
-*.iml
+
+java-high-rest-client-demo/*.iml
+java-transportClient-demo/*.iml
+java-high-rest-client-demo/.idea/
+java-transportClient-demo/.idea/
+
+java-high-rest-client-demo/.target/
+java-transportClient-demo/.target/
+
+
+
